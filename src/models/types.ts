@@ -33,6 +33,20 @@ export type blogType = {
     websiteUrl: string,
     createdAt: string
 }
+export type userType = {
+    _id: string | ObjectId
+    login: string
+    password: string
+    email: string
+    createdAt: string
+}
+
+export type userTypeOutput = {
+    id: string | ObjectId
+    login: string
+    email: string
+    createdAt: string
+}
 
 
 export type RequestWithBody<B> = Request<{},{}, B>
