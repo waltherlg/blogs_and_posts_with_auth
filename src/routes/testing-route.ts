@@ -1,6 +1,8 @@
 import {Request, Response, Router} from "express";
 import {postsService} from "../domain/posts-service";
 import {blogsService} from "../domain/blogs-service";
+import {usersRepository} from "../repositories/users-repository";
+import {usersService} from "../domain/users-service";
 
 export const testingRouter = Router({})
 
@@ -9,7 +11,8 @@ testingRouter.delete('/',
         console.log(req)
         const isPostsDeleted = await postsService.deleteAllPosts();
         const isBlogsDeleted = await blogsService.deleteAllBlogs();
-        if (isPostsDeleted && isBlogsDeleted) {
+        const isUsersDeleted = await usersService.deleteAllUsers();
+        if (isPostsDeleted && isBlogsDeleted && isUsersDeleted) {
             return res.sendStatus(204)
         } else {
             res.sendStatus(404);
@@ -18,7 +21,3 @@ testingRouter.delete('/',
 
     })
 
-testingRouter.get('/',
-    (req: Request, res: Response,) => {
-        res.send("fdsffsd")
-    })
