@@ -3,12 +3,12 @@ import {ObjectId} from "mongodb";
 import {userType} from "../models/types";
 import {userTypeOutput} from "../models/types";
 
-export const userCollection = client.db("blogsAndPosts").collection<userType>("users")
+export const usersCollection = client.db("blogsAndPosts").collection<userType>("users")
 
 export const usersRepository = {
 
     async createUser(newUser: userType): Promise<userTypeOutput> {
-        const result = await userCollection.insertOne(newUser)
+        const result = await usersCollection.insertOne(newUser)
         let createdUser = {
             id: newUser._id.toString(),
             login: newUser.login,
@@ -21,7 +21,7 @@ export const usersRepository = {
     async deleteUser(id: string): Promise<boolean>{
         if (ObjectId.isValid(id)){
             let _id = new ObjectId(id)
-            const result = await userCollection.deleteOne({_id: _id})
+            const result = await usersCollection.deleteOne({_id: _id})
             return result.deletedCount === 1
         }
         else return false
