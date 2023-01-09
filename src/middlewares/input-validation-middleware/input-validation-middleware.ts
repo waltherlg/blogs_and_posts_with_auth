@@ -20,6 +20,25 @@ export const inputValidationMiddleware = (req: Request, res: Response, next: Nex
     }
 }
 
+// validation for user
+export const loginValidation = body('login')
+    .exists({checkFalsy: true, checkNull: true}).bail().withMessage({"message": "write your login", "field": "login" })
+    .notEmpty().bail().withMessage({"message": "login is empty", "field": "login"})
+    .trim().bail().withMessage({"message": "login is not string", "field": "login" })
+    .isLength({min: 3, max: 10}).bail().withMessage({"message": "wrong length login", "field": "login" })
+    .matches('^[a-zA-Z0-9_-]*$').bail().withMessage({"message": "wrong symbols in login", "field": "login" })
+
+export const passwordValidation = body('password')
+    .exists({checkFalsy: true, checkNull: true}).bail().withMessage({"message": "write your password", "field": "password" })
+    .notEmpty().bail().withMessage({"message": "password is empty", "field": "password"})
+    .trim().bail().withMessage({"message": "password is not string", "field": "password" })
+    .isLength({min: 6, max: 20}).bail().withMessage({"message": "wrong length password", "field": "password" })
+
+export const emailValidation = body('email')
+    .exists({checkFalsy: true, checkNull: true}).bail().withMessage({"message": "write your email", "field": "email" })
+    .notEmpty().bail().withMessage({"message": "email is empty", "field": "email"})
+    .trim().bail().withMessage({"message": "email is not string", "field": "email" })
+    .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).bail().withMessage({"message": "wrong symbols in email", "field": "email" })
 
 // validation for blog
 export const nameValidation = body('name')
@@ -36,7 +55,7 @@ export const descriptionValidation = body('description')
 export const websiteUrlValidation = body('websiteUrl')
     .exists().bail().withMessage({"message": "websiteUrl not exist", "field": "websiteUrl" })
     .trim().bail().withMessage({"message": "websiteUrl is not string", "field": "websiteUrl" })
-    .isLength({max: 100}).bail().withMessage({"message": "wrong length websiteUrl", "field": "websiteUrl" })
+    .isLength({min: 1, max: 100}).bail().withMessage({"message": "wrong length websiteUrl", "field": "websiteUrl" })
     .isURL().bail().withMessage({"message": "wrong websiteUrl", "field": "websiteUrl" })
 
 // validations for post

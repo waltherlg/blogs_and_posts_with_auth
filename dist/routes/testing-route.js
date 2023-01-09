@@ -13,18 +13,17 @@ exports.testingRouter = void 0;
 const express_1 = require("express");
 const posts_service_1 = require("../domain/posts-service");
 const blogs_service_1 = require("../domain/blogs-service");
+const users_service_1 = require("../domain/users-service");
 exports.testingRouter = (0, express_1.Router)({});
 exports.testingRouter.delete('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req);
     const isPostsDeleted = yield posts_service_1.postsService.deleteAllPosts();
     const isBlogsDeleted = yield blogs_service_1.blogsService.deleteAllBlogs();
-    if (isPostsDeleted && isBlogsDeleted) {
+    const isUsersDeleted = yield users_service_1.usersService.deleteAllUsers();
+    if (isPostsDeleted && isBlogsDeleted && isUsersDeleted) {
         return res.sendStatus(204);
     }
     else {
         res.sendStatus(404);
     }
 }));
-exports.testingRouter.get('/', (req, res) => {
-    res.send("fdsffsd");
-});

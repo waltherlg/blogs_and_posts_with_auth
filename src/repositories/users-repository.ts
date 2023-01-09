@@ -2,6 +2,7 @@ import {client} from "./db";
 import {ObjectId} from "mongodb";
 import {userType} from "../models/types";
 import {userTypeOutput} from "../models/types";
+import {usersService} from "../domain/users-service";
 
 export const usersCollection = client.db("blogsAndPosts").collection<userType>("users")
 
@@ -30,6 +31,11 @@ export const usersRepository = {
     async deleteAllUsers(): Promise<boolean>{
         const result = await usersCollection.deleteMany({})
         return true
+    },
+
+    async findUserByLoginOrEmail(loginOrEmail: string): Promise<userType | null>{ // вопрос
+        const user = await usersCollection.findOne({$or: [{email: loginOrEmail}, {login: loginOrEmail}]})
+        return user
     }
 
 

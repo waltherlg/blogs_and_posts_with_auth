@@ -36,7 +36,8 @@ export type blogType = {
 export type userType = {
     _id: string | ObjectId
     login: string
-    password: string
+    passwordHash: string,
+    passwordSalt: string,
     email: string
     createdAt: string
 }

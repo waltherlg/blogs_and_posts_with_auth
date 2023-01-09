@@ -12,3 +12,8 @@ export type userInputModel = {
 export type userOutputModel = {
 
 }
+
+export type userAuthModel = {
+    loginOrEmail: string,
+    password: string
+}

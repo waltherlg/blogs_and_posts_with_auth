@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.existParamBlogIdValidation = exports.existBlogIdValidation = exports.contentValidation = exports.shortDescriptionValidation = exports.titleValidation = exports.websiteUrlValidation = exports.descriptionValidation = exports.nameValidation = exports.inputValidationMiddleware = void 0;
+exports.existParamBlogIdValidation = exports.existBlogIdValidation = exports.contentValidation = exports.shortDescriptionValidation = exports.titleValidation = exports.websiteUrlValidation = exports.descriptionValidation = exports.nameValidation = exports.emailValidation = exports.passwordValidation = exports.loginValidation = exports.inputValidationMiddleware = void 0;
 const express_validator_1 = require("express-validator");
 const express_validator_2 = require("express-validator");
 const blogs_service_1 = require("../../domain/blogs-service");
@@ -26,6 +26,23 @@ const inputValidationMiddleware = (req, res, next) => {
     }
 };
 exports.inputValidationMiddleware = inputValidationMiddleware;
+// validation for user
+exports.loginValidation = (0, express_validator_1.body)('login')
+    .exists({ checkFalsy: true, checkNull: true }).bail().withMessage({ "message": "write your login", "field": "login" })
+    .notEmpty().bail().withMessage({ "message": "login is empty", "field": "login" })
+    .trim().bail().withMessage({ "message": "login is not string", "field": "login" })
+    .isLength({ min: 3, max: 10 }).bail().withMessage({ "message": "wrong length login", "field": "login" })
+    .matches('^[a-zA-Z0-9_-]*$').bail().withMessage({ "message": "wrong symbols in login", "field": "login" });
+exports.passwordValidation = (0, express_validator_1.body)('password')
+    .exists({ checkFalsy: true, checkNull: true }).bail().withMessage({ "message": "write your password", "field": "password" })
+    .notEmpty().bail().withMessage({ "message": "password is empty", "field": "password" })
+    .trim().bail().withMessage({ "message": "password is not string", "field": "password" })
+    .isLength({ min: 6, max: 20 }).bail().withMessage({ "message": "wrong length password", "field": "password" });
+exports.emailValidation = (0, express_validator_1.body)('email')
+    .exists({ checkFalsy: true, checkNull: true }).bail().withMessage({ "message": "write your email", "field": "email" })
+    .notEmpty().bail().withMessage({ "message": "email is empty", "field": "email" })
+    .trim().bail().withMessage({ "message": "email is not string", "field": "email" })
+    .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).bail().withMessage({ "message": "wrong symbols in email", "field": "email" });
 // validation for blog
 exports.nameValidation = (0, express_validator_1.body)('name')
     .exists({ checkFalsy: true, checkNull: true }).bail().withMessage({ "message": "name not exist", "field": "name" })
@@ -39,7 +56,7 @@ exports.descriptionValidation = (0, express_validator_1.body)('description')
 exports.websiteUrlValidation = (0, express_validator_1.body)('websiteUrl')
     .exists().bail().withMessage({ "message": "websiteUrl not exist", "field": "websiteUrl" })
     .trim().bail().withMessage({ "message": "websiteUrl is not string", "field": "websiteUrl" })
-    .isLength({ max: 100 }).bail().withMessage({ "message": "wrong length websiteUrl", "field": "websiteUrl" })
+    .isLength({ min: 1, max: 100 }).bail().withMessage({ "message": "wrong length websiteUrl", "field": "websiteUrl" })
     .isURL().bail().withMessage({ "message": "wrong websiteUrl", "field": "websiteUrl" });
 // validations for post
 exports.titleValidation = (0, express_validator_1.body)('title')

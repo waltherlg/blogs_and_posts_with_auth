@@ -4,7 +4,11 @@ import {userInputModel, userParamURIModel} from "../models/users-models";
 
 import {usersService} from "../domain/users-service";
 import {basicAuthMiddleware} from "../middlewares/basic-auth.middleware";
-import {inputValidationMiddleware} from "../middlewares/input-validation-middleware/input-validation-middleware";
+import {
+    emailValidation,
+    inputValidationMiddleware,
+    loginValidation, passwordValidation
+} from "../middlewares/input-validation-middleware/input-validation-middleware";
 import {requestUsersQueryModel} from "../models/models";
 import {usersRepository} from "../repositories/users-repository";
 import {usersQueryRepo} from "../repositories/users-query-repository";
@@ -14,6 +18,9 @@ export const usersRouter = Router({})
 
 usersRouter.post('/',
     basicAuthMiddleware,
+    loginValidation,
+    passwordValidation,
+    emailValidation,
     inputValidationMiddleware,
     async (req: RequestWithBody<userInputModel>, res: Response) => {
     const newUser = await usersService.createUser(

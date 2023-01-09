@@ -16,7 +16,7 @@ const basic_auth_middleware_1 = require("../middlewares/basic-auth.middleware");
 const input_validation_middleware_1 = require("../middlewares/input-validation-middleware/input-validation-middleware");
 const users_query_repository_1 = require("../repositories/users-query-repository");
 exports.usersRouter = (0, express_1.Router)({});
-exports.usersRouter.post('/', basic_auth_middleware_1.basicAuthMiddleware, input_validation_middleware_1.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.usersRouter.post('/', basic_auth_middleware_1.basicAuthMiddleware, input_validation_middleware_1.loginValidation, input_validation_middleware_1.passwordValidation, input_validation_middleware_1.emailValidation, input_validation_middleware_1.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const newUser = yield users_service_1.usersService.createUser(req.body.login, req.body.password, req.body.email);
     res.status(201).send(newUser);
 }));

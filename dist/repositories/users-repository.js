@@ -36,5 +36,17 @@ exports.usersRepository = {
             else
                 return false;
         });
+    },
+    deleteAllUsers() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield exports.usersCollection.deleteMany({});
+            return true;
+        });
+    },
+    findUserByLoginOrEmail(loginOrEmail) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield exports.usersCollection.findOne({ $or: [{ email: loginOrEmail }, { login: loginOrEmail }] });
+            return user;
+        });
     }
 };
