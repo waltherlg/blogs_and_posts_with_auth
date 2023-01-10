@@ -19,6 +19,7 @@ export type postType = {
     blogName: string,
     createdAt: string
 }
+
 export type blogTypeOutput = {
     id: string,
     name: string,
@@ -33,6 +34,7 @@ export type blogType = {
     websiteUrl: string,
     createdAt: string
 }
+
 export type userType = {
     _id: string | ObjectId
     login: string
@@ -41,7 +43,6 @@ export type userType = {
     email: string
     createdAt: string
 }
-
 export type userTypeOutput = {
     id: string | ObjectId
     login: string

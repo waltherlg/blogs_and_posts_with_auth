@@ -5,18 +5,6 @@ import * as bcrypt from 'bcrypt'
 
 export const usersService = {
 
-    // async createUser(login: string, password: string, email: string): Promise<userTypeOutput> {
-    //     const newUser: userType = {
-    //         "_id": new ObjectId(),
-    //         "login": login,
-    //         "password": password,
-    //         "email": email,
-    //         "createdAt": new Date().toISOString()
-    //     }
-    //     const createdUser = await usersRepository.createUser(newUser)
-    //     return createdUser
-    // },
-
     async createUser(login: string, password: string, email: string): Promise<userTypeOutput> {
 
         const passwordSalt = await bcrypt.genSalt(10)
