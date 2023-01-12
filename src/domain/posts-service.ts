@@ -2,6 +2,7 @@ import {postsRepository} from "../repositories/posts-repository";
 import {ObjectId} from "mongodb";
 import {postType} from "../models/types";
 import {postTypeOutput} from "../models/types";
+import {blogsService} from "./blogs-service";
 
 
 export const postsService = {
@@ -19,13 +20,15 @@ export const postsService = {
     },
 
     async createPost(title: string, shortDescription: string, content: string, blogId: string): Promise<postTypeOutput> {
+        let foundBlog = await blogsService.getBlogByID(blogId)
+        const blogName =  foundBlog!.name
         const newPost: postType = {
             "_id": new ObjectId(),
             "title": title,
             "shortDescription": shortDescription,
             "content": content,
             "blogId": blogId,
-            "blogName": title,
+            "blogName": blogName,
             "createdAt": new Date().toISOString()
         }
         const createdPost = await postsRepository.createPost(newPost)
@@ -33,13 +36,15 @@ export const postsService = {
     },
 
     async createPostByBlogId(title: string, shortDescription: string, content: string, blogId: string): Promise<postTypeOutput> {
+        let foundBlog = await blogsService.getBlogByID(blogId)
+        const blogName =  foundBlog!.name
         const newPost: postType = {
             "_id": new ObjectId(),
             "title": title,
             "shortDescription": shortDescription,
             "content": content,
             "blogId": blogId,
-            "blogName": title,
+            "blogName": blogName,
             "createdAt": new Date().toISOString()
         }
         const createdPost = await postsRepository.createPost(newPost)
